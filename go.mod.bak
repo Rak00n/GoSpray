@@ -1,0 +1,3 @@
+module GoSpray
+
+go 1.17
