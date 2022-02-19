@@ -16,6 +16,7 @@ var passwordListRandomization bool
 var protocol string
 var target string
 var workersNumber int
+var taskStateObj taskState 
 
 func init() {
 	flag.StringVar(&pathToUsernameList, "ul", "usernames.txt", "Path to usernames list")
@@ -26,10 +27,14 @@ func init() {
 	flag.StringVar(&target, "t", "10.0.0.1:21", "Target")
 	flag.IntVar(&workersNumber, "w", 5, "Number of Workers")
 	flag.Parse()
+	
+	
 }
 
 func main() {
-	rand.Seed(time.Now().UnixNano())
+	randomSeed := time.Now().UnixNano()
+	taskStateObj.taskRandomSeed = randomSeed
+	rand.Seed(taskStateObj.taskRandomSeed)
     fmt.Println("hello world")
     fmt.Println(pathToUsernameList)
     fmt.Println(pathToPasswordList)
@@ -37,6 +42,7 @@ func main() {
     fmt.Println(target)
     targetToSpray := parseTarget(target)
 	if protocol == "ftp" {
+		logProgress()
 		ftpSpray(targetToSpray)
 	}
 	
