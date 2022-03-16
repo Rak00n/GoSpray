@@ -19,6 +19,7 @@ func sshSpray(wg *sync.WaitGroup, channelToCommunicate chan string,  taskToRun t
 				fmt.Print("+")
 				channelToCommunicate <- username+":"+password
 				sshClient.Close()//
+			//
 			}
 
 
