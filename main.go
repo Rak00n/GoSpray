@@ -1,11 +1,12 @@
 package main
 
 import (
-	"fmt"
 	// "os"
 	"flag"
-	"time"
+	"fmt"
 	"math/rand"
+	"sync"
+	"time"
 	// "FtpSpray"
 )
 
@@ -31,19 +32,39 @@ func init() {
 	
 }
 
+func printSuccessfulLogin(c chan string) {
+	credentials := <- c
+	fmt.Println("\nSuccess: "+credentials)
+}
+
 func main() {
 	randomSeed := time.Now().UnixNano()
 	taskStateObj.taskRandomSeed = randomSeed
+	usernames := loadList(pathToUsernameList)
+	passwords := loadList(pathToPasswordList)
 	rand.Seed(taskStateObj.taskRandomSeed)
-    fmt.Println("hello world")
-    fmt.Println(pathToUsernameList)
-    fmt.Println(pathToPasswordList)
-    fmt.Println(protocol)
-    fmt.Println(target)
+
     targetToSpray := parseTarget(target)
+	wholeTask := task{target: targetToSpray, usernames: usernames, passwords: passwords, numberOfWorkers: workersNumber}
+	tasks := dispatchTask(wholeTask)
+
+	var wg sync.WaitGroup
+	channelForWorker := make(chan string)
+	go printSuccessfulLogin(channelForWorker)
 	if protocol == "ftp" {
-		logProgress()
-		ftpSpray(targetToSpray)
+		for _,task := range tasks{
+			wg.Add(1)
+
+			go ftpSpray(&wg,channelForWorker,task)
+		}
+	} else if protocol == "ssh" {
+		for _,task := range tasks{
+			wg.Add(1)
+
+			go sshSpray(&wg,channelForWorker,task)
+		}
 	}
-	
+
+	wg.Wait()
+	close(channelForWorker)
 }

