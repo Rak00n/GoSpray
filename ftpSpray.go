@@ -10,6 +10,9 @@ import (
 
 func ftpSpray(wg *sync.WaitGroup, channelToCommunicate chan string,  taskToRun task) {
 	defer wg.Done()
+	if taskToRun.target.port == 0 {
+		taskToRun.target.port = 21
+	}
 	for _,username := range taskToRun.usernames {
 		for _,password := range taskToRun.passwords {
 

@@ -63,6 +63,12 @@ func main() {
 
 			go sshSpray(&wg,channelForWorker,task)
 		}
+	} else if protocol == "httpbasic" {
+		for _,task := range tasks{
+			wg.Add(1)
+
+			go basicSpray(&wg,channelForWorker,task)
+		}
 	}
 
 	wg.Wait()

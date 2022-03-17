@@ -13,6 +13,8 @@ import (
 type targetStruct struct{
 	host string
 	port int
+	scheme string
+	url string
 }
 
 type workerState struct {
@@ -34,9 +36,37 @@ type task struct {
 
 func parseTarget(targetString string) targetStruct {
 	var target targetStruct
-	s := strings.Split(targetString, ":")
-	target.host = s[0]
-	target.port,_ = strconv.Atoi(s[1])
+	tempString := targetString
+	// https://www.www.www:52/sasd/1/2/3
+	if strings.Contains(targetString, "://") {
+		s := strings.Split(targetString, "://")
+		target.scheme = s[0]
+		tempString = s[1]
+	}
+	// www.www.www:52/sasd/1/2/3
+	if strings.Contains(tempString, ":") {
+		s := strings.Split(tempString, ":")
+		target.host = s[0]
+		tempString = s[1]
+		if strings.Contains(tempString,"/"){
+			tempStringSlice := strings.Split(tempString,"/")
+			target.port,_ = strconv.Atoi(tempStringSlice[0])
+			target.url = strings.Join(tempStringSlice[1:],"/")
+		} else {
+			target.port,_ = strconv.Atoi(tempString)
+		}
+	} else {
+		if strings.Contains(tempString,"/"){
+			tempStringSlice := strings.Split(tempString,"/")
+			target.host = tempStringSlice[0]
+			target.url = strings.Join(tempStringSlice[1:],"/")
+			target.port = 0
+		} else {
+			target.host = tempString
+			target.port = 0
+		}
+	}
+
 	return target
 }
 
