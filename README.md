@@ -1,17 +1,22 @@
 # GoSpray
- Tool to bruteforce different network protocols.
+ Simple tool to bruteforce (spray actually) different network protocols.
  
- Supports: ssh, ftp, http basic auth
- 
->go run . -ul testUsernames.txt -pl testPasswords.txt -p ftp -t 192.168.56.102:21 -w 10
->
->---------------+
->Success: user:123
->-------------------
+ GoSpray currently supports: **ssh, ftp** and **http basic authentication**
 
-Protocols (-p):
+```
+go run . -ul testUsernames.txt -pl testPasswords.txt -p ftp -t 192.168.56.102:21 -w 10
+---------------+
+Success: user:123
+-------------------
+```
 
-  ssh
-  ftp
-  httpbasic
+-ul   Path to file with **usernames**
+
+-ul   Path to file with **passwords**
+
+-p   Protocol to brute ( ssh, ftp, httpbasic )
+
+-t   Target host. http://127.0.0.1:667/protected/folder/
+
+-w   Number of workers (threads)
 
