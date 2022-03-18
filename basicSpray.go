@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"encoding/base64"
 	"fmt"
 	"net/http"
@@ -15,6 +16,7 @@ func basicSpray(wg *sync.WaitGroup, channelToCommunicate chan string,  taskToRun
 	for _,username := range taskToRun.usernames {
 		for _,password := range taskToRun.passwords {
 			headerValue := base64.StdEncoding.EncodeToString([]byte(username+":"+password))
+			http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 			client := &http.Client{}
 			req, _ := http.NewRequest("GET", taskToRun.target.scheme+"://"+taskToRun.target.host+":"+strconv.Itoa(taskToRun.target.port)+"/"+taskToRun.target.url, nil)
 			req.Header.Set("Authorization", "Basic "+headerValue)
