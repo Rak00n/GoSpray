@@ -38,10 +38,6 @@ func printSuccessfulLogin(c chan string) {
 }
 
 func main() {
-	//hash := md5.Sum([]byte("admin:realm:456"))
-	//HA1 := hex.EncodeToString(hash[:])
-	//fmt.Println(HA1)
-	//os.Exit(1)
 	randomSeed := time.Now().UnixNano()
 	taskStateObj.taskRandomSeed = randomSeed
 	usernames := loadList(pathToUsernameList)
