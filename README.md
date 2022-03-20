@@ -1,7 +1,7 @@
 # GoSpray
  Simple tool to bruteforce (spray actually) different network protocols.
  
- GoSpray currently supports: **ssh, ftp** and **http basic authentication**
+ GoSpray currently supports: **ssh, ftp, http basic** and **digest authentication**
 
 ```
 go run . -ul testUsernames.txt -pl testPasswords.txt -p ftp -t 192.168.56.102:21 -w 10
