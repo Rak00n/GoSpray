@@ -14,7 +14,7 @@ Success: user:123
 
 -ul   Path to file with **passwords**
 
--p   Protocol to brute ( ssh, ftp, httpbasic )
+-p   Protocol to brute ( ssh, ftp, httpbasic, httpdigest )
 
 -t   Target host. http://127.0.0.1:667/protected/folder/
 
