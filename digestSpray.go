@@ -97,14 +97,4 @@ func digestSpray(wg *sync.WaitGroup, channelToCommunicate chan string,  taskToRu
 	}
 }
 
-//Authorization: Digest username="admin", realm="private", nonce="JzsNFY3aBQA=83ef09f1a0d191fc5fe395c0ebb6e6afc9e38865", uri="/1/", algorithm=MD5, response="1c03d4e473eb96e9c4fa7e454b5d2969", qop=auth, nc=00000002, cnonce="e9ee6d536ff81fdd"
-//
-//admin:private:456	31f0f4ba834d8053d34285467b40cbec
-//GET:/1/				61952ea1383896fd01ea8ce134231f38
-//
-//31f0f4ba834d8053d34285467b40cbec:JzsNFY3aBQA=83ef09f1a0d191fc5fe395c0ebb6e6afc9e38865:00000002:e9ee6d536ff81fdd:auth:61952ea1383896fd01ea8ce134231f38	1c03d4e473eb96e9c4fa7e454b5d2969
-//
-//HA1 = MD5(username:realm:password)
-//HA2 = MD5(GET:/dir/index.html)
-//response = MD5(HA1:nonce,nc,cnonce,qop,HA2)
 
