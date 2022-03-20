@@ -38,6 +38,10 @@ func printSuccessfulLogin(c chan string) {
 }
 
 func main() {
+	//hash := md5.Sum([]byte("admin:realm:456"))
+	//HA1 := hex.EncodeToString(hash[:])
+	//fmt.Println(HA1)
+	//os.Exit(1)
 	randomSeed := time.Now().UnixNano()
 	taskStateObj.taskRandomSeed = randomSeed
 	usernames := loadList(pathToUsernameList)
@@ -68,6 +72,12 @@ func main() {
 			wg.Add(1)
 
 			go basicSpray(&wg,channelForWorker,task)
+		}
+	} else if protocol == "httpdigest" {
+		for _,task := range tasks{
+			wg.Add(1)
+
+			go digestSpray(&wg,channelForWorker,task)
 		}
 	}
 
