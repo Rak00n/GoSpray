@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"encoding/gob"
 	"fmt"
 	"log"
 	"math"
@@ -34,13 +35,13 @@ type targetStruct struct{
 }
 
 type workerState struct {
-	workerId int
-	workerProgress int
+	WorkerId int
+	WorkerProgress int
 }
 
 type taskState struct {
-	taskRandomSeed int64
-	workersStates []workerState
+	TaskRandomSeed int64
+	WorkersStates []workerState
 }
 
 type task struct {
@@ -48,6 +49,26 @@ type task struct {
 	usernames []string
 	passwords []string
 	numberOfWorkers int
+}
+
+func writeGob(filePath string,object interface{}) error {
+	file, err := os.Create(filePath)
+	if err == nil {
+		encoder := gob.NewEncoder(file)
+		encoder.Encode(object)
+	}
+	file.Close()
+	return err
+}
+
+func readGob(filePath string,object interface{}) error {
+	file, err := os.Open(filePath)
+	if err == nil {
+		decoder := gob.NewDecoder(file)
+		err = decoder.Decode(object)
+	}
+	file.Close()
+	return err
 }
 
 func parseTarget(targetString string) targetStruct {
@@ -91,8 +112,17 @@ func stringifyTarget(targetToStringify targetStruct) string {
 	return targetToStringify.host+":"+portString
 }
 
-func logProgress() {
-	fmt.Println(taskStateObj)
+func logProgress(logFilename string, logMessage string) {
+	f, err := os.OpenFile(logFilename, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+	if err != nil {
+		panic(err)
+	}
+
+	defer f.Close()
+
+	if _, err = f.WriteString(logMessage+"\n"); err != nil {
+		panic(err)
+	}
 }
 
 func loadList(pathToFile string) []string {
@@ -130,4 +160,19 @@ func dispatchTask(taskToDispatch task) []task{
 		tasksToReturn = append(tasksToReturn,task{target: taskToDispatch.target, usernames: usernamesBuffer, passwords: taskToDispatch.passwords, numberOfWorkers: 1})
 	}
 	return tasksToReturn
+}
+
+func saveProgress () {
+	err := writeGob("./progress.gob",currentTask)
+	if err != nil{
+		fmt.Println(err)
+	}
+}
+
+func monitorCurrentTask() {
+	for {
+		//fmt.Println(currentTask)
+		saveProgress()
+		time.Sleep(time.Second)
+	}
 }

