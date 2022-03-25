@@ -1,11 +1,26 @@
 # GoSpray
  Simple tool to bruteforce (spray actually) different network protocols.
+ GoSpray also supports restoration of interrupted tasks ("-restore").
  
  GoSpray currently supports: **ssh, ftp, http basic** and **digest authentication**
+
 
 ```
 go run . -ul testUsernames.txt -pl testPasswords.txt -p ftp -t 192.168.56.102:21 -w 10
 ---------------+
+Success: user:123
+-------------------
+```
+
+
+```
+go run . -ul testUsernames.txt -pl testPasswords.txt -p ftp -t 192.168.56.102:21 -w 10
+--------
+
+CTRL+C
+
+go run . -restore
+-------+
 Success: user:123
 -------------------
 ```
@@ -19,4 +34,6 @@ Success: user:123
 -t   Target host. http://127.0.0.1:667/protected/folder/
 
 -w   Number of workers (threads)
+
+-restore use "progress.gob" to restore task
 
