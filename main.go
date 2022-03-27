@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"math/rand"
+	"os"
 	"sync"
 	"time"
 
@@ -54,6 +55,11 @@ var currentTask runningTask
 
 func main() {
 
+
+	///
+	rdpSpray()
+	os.Exit(1)
+	///
 	if restoreTask == true {
 		err := readGob("./progress.gob",&currentTask)
 		if err != nil {
