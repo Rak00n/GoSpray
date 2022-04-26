@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/GoSpray/rdp"
+	"github.com/GoSpray/grdp"
 )
 
 func rdpSpray () {
