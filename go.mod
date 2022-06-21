@@ -3,6 +3,7 @@ module github.com/GoSpray
 go 1.17
 
 require (
+	github.com/Rak00n/grdp v0.0.0-20220621164316-248428691557 // indirect
 	github.com/huin/asn1ber v0.0.0-20120622192748-af09f62e6358 // indirect
 	github.com/icodeface/tls v0.0.0-20190904083142-17aec93c60e5 // indirect
 	github.com/lunixbochs/struc v0.0.0-20200707160740-784aaebc1d40 // indirect
