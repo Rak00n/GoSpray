@@ -58,6 +58,9 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../grdp" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
+  <component name="ReadonlyStatusHandler">
+    <option name="SHOW_DIALOG" value="false" />
+  </component>
   <component name="RunManager">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="GoSpray" />
@@ -101,37 +104,41 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="741" y="275" key="FileChooserDialogImpl/0.0.1920.1040/3840.0.1920.1040@0.0.1920.1040" timestamp="1655831034119" />
-    <state width="1878" height="282" key="GridCell.Tab.0.bottom" timestamp="1655831259158">
+    <state width="1878" height="282" key="GridCell.Tab.0.bottom" timestamp="1655831957116">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1878" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040/-3840.0.1920.1040@-3840.0.1920.1040" timestamp="1648224454503" />
     <state width="1878" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040/-3840.0.1920.1040@0.0.1920.1040" timestamp="1648403046835" />
-    <state width="1878" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040/3840.0.1920.1040@0.0.1920.1040" timestamp="1655831259158" />
+    <state width="1878" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040/3840.0.1920.1040@0.0.1920.1040" timestamp="1655831957116" />
     <state width="1878" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040/3840.0.1920.1040@3840.0.1920.1040" timestamp="1652176714446" />
-    <state width="1878" height="282" key="GridCell.Tab.0.center" timestamp="1655831259157">
+    <state width="1878" height="282" key="GridCell.Tab.0.center" timestamp="1655831957116">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1878" height="282" key="GridCell.Tab.0.center/0.0.1920.1040/-3840.0.1920.1040@-3840.0.1920.1040" timestamp="1648224454503" />
     <state width="1878" height="282" key="GridCell.Tab.0.center/0.0.1920.1040/-3840.0.1920.1040@0.0.1920.1040" timestamp="1648403046835" />
-    <state width="1878" height="282" key="GridCell.Tab.0.center/0.0.1920.1040/3840.0.1920.1040@0.0.1920.1040" timestamp="1655831259157" />
+    <state width="1878" height="282" key="GridCell.Tab.0.center/0.0.1920.1040/3840.0.1920.1040@0.0.1920.1040" timestamp="1655831957116" />
     <state width="1878" height="282" key="GridCell.Tab.0.center/0.0.1920.1040/3840.0.1920.1040@3840.0.1920.1040" timestamp="1652176714446" />
-    <state width="1878" height="282" key="GridCell.Tab.0.left" timestamp="1655831259157">
+    <state width="1878" height="282" key="GridCell.Tab.0.left" timestamp="1655831957116">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1878" height="282" key="GridCell.Tab.0.left/0.0.1920.1040/-3840.0.1920.1040@-3840.0.1920.1040" timestamp="1648224454503" />
     <state width="1878" height="282" key="GridCell.Tab.0.left/0.0.1920.1040/-3840.0.1920.1040@0.0.1920.1040" timestamp="1648403046835" />
-    <state width="1878" height="282" key="GridCell.Tab.0.left/0.0.1920.1040/3840.0.1920.1040@0.0.1920.1040" timestamp="1655831259157" />
+    <state width="1878" height="282" key="GridCell.Tab.0.left/0.0.1920.1040/3840.0.1920.1040@0.0.1920.1040" timestamp="1655831957116" />
     <state width="1878" height="282" key="GridCell.Tab.0.left/0.0.1920.1040/3840.0.1920.1040@3840.0.1920.1040" timestamp="1652176714446" />
-    <state width="1878" height="282" key="GridCell.Tab.0.right" timestamp="1655831259158">
+    <state width="1878" height="282" key="GridCell.Tab.0.right" timestamp="1655831957116">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1878" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/-3840.0.1920.1040@-3840.0.1920.1040" timestamp="1648224454503" />
     <state width="1878" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/-3840.0.1920.1040@0.0.1920.1040" timestamp="1648403046835" />
-    <state width="1878" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/3840.0.1920.1040@0.0.1920.1040" timestamp="1655831259158" />
+    <state width="1878" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/3840.0.1920.1040@0.0.1920.1040" timestamp="1655831957116" />
     <state width="1878" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/3840.0.1920.1040@3840.0.1920.1040" timestamp="1652176714446" />
     <state x="463" y="166" key="SettingsEditor" timestamp="1647542550226">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="463" y="166" key="SettingsEditor/0.0.1920.1040/-3840.0.1920.1040@0.0.1920.1040" timestamp="1647542550226" />
+    <state x="683" y="432" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1655831869354">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="683" y="432" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.0.1920.1040/3840.0.1920.1040@0.0.1920.1040" timestamp="1655831869354" />
   </component>
 </project>
