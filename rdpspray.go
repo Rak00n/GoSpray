@@ -150,12 +150,12 @@ var (
 )
 
 func rdpSpray () {
-	if user == "" || passwd == "" {
-		fmt.Println("user and passwd empty")
-		os.Exit(-1)
-	}
-	g := NewClient(ip, glog.LEVEL(loglevel))
-	err := g.Login(domain, user, passwd)
+	//if user == "" || passwd == "" {
+	//	fmt.Println("user and passwd empty")
+	//	os.Exit(-1)
+	//}
+	g := NewClient("192.168.56.104:3389", glog.LEVEL(0))
+	err := g.Login("", "user", "123")
 	//g := NewClient("192.168.0.132:3389", glog.LEVEL(loglevel))
 	//err := g.Login("", "administrator", "Jhadmin123")
 	//g := NewClient("192.168.18.100:5902", glog.DEBUG)
