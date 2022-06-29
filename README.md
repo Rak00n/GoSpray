@@ -36,11 +36,12 @@ Success: user:123
 -w   Number of workers (threads)
 
 -restore use "progress.gob" to restore task
+ 
 
+ 
+**Examples:**
 
-
-*Examples:*
-
+```
 spray.exe -ul testUsernames.txt -pl testPasswords.txt -p ssh -t 192.168.56.102 -w 10
 
 spray.exe -ul testUsernames.txt -pl testPasswords.txt -p ftp -t 192.168.56.102:21 -w 10
@@ -53,3 +54,4 @@ spray.exe -ul testUsernames.txt -pl testPasswords.txt -p httpdigest -t http://19
 
 
 spray.exe -restore
+```
