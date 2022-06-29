@@ -8,8 +8,8 @@ import (
 	"encoding/hex"
 	"time"
 
-	"../../core"
-	"../../glog"
+	"github.com/GoSpray/grdp/core"
+	"github.com/GoSpray/grdp/glog"
 	"github.com/lunixbochs/struc"
 )
 

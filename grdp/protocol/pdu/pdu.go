@@ -6,10 +6,10 @@ import (
 	"errors"
 	"fmt"
 
-	"../../core"
-	"../../emission"
-	"../../glog"
-	"../../protocol/t125/gcc"
+	"github.com/GoSpray/grdp/core"
+	"github.com/GoSpray/grdp/emission"
+	"github.com/GoSpray/grdp/glog"
+	"github.com/GoSpray/grdp/protocol/t125/gcc"
 )
 
 type PDULayer struct {

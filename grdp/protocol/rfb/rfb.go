@@ -12,9 +12,9 @@ import (
 
 	"github.com/lunixbochs/struc"
 
-	"../../core"
-	"../../emission"
-	"../../glog"
+	"github.com/GoSpray/grdp/core"
+	"github.com/GoSpray/grdp/emission"
+	"github.com/GoSpray/grdp/glog"
 )
 
 // ProtocolVersion

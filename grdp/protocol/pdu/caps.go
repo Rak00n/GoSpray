@@ -7,10 +7,10 @@ import (
 	"fmt"
 	"io"
 
-	"../../glog"
+	"github.com/GoSpray/grdp/glog"
 
-	"../../core"
-	"../../protocol/t125/gcc"
+	"github.com/GoSpray/grdp/core"
+	"github.com/GoSpray/grdp/protocol/t125/gcc"
 	"github.com/lunixbochs/struc"
 )
 

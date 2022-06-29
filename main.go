@@ -5,7 +5,6 @@ import (
 	"flag"
 	"fmt"
 	"math/rand"
-	"os"
 	"sync"
 	"time"
 
@@ -26,8 +25,8 @@ func init() {
 	flag.BoolVar(&restoreTask, "restore", false, "Restore task")
 	flag.StringVar(&pathToUsernameList, "ul", "usernames.txt", "Path to usernames list")
 	flag.StringVar(&pathToPasswordList, "pl", "passwords.txt", "Path to passwords list")
-	flag.BoolVar(&usernameListRandomization, "ru", true, "Randomize users list 1/0")
-	flag.BoolVar(&passwordListRandomization, "rp", true, "Randomize passwords list 1/0")
+	flag.BoolVar(&usernameListRandomization, "ru", false, "Randomize users list")
+	flag.BoolVar(&passwordListRandomization, "rp", false, "Randomize passwords list")
 	flag.StringVar(&protocol, "p", "ftp", "Protocol")
 	flag.StringVar(&target, "t", "10.0.0.1:21", "Target")
 	flag.IntVar(&workersNumber, "w", 5, "Number of Workers")
@@ -42,32 +41,42 @@ func printSuccessfulLogin(c chan string) {
 }
 
 type runningTask struct {
-	RandomSeed int
+	RandomSeed int64
 	UsersList string
 	PasswordsList string
 	ProtocolToSpray string
 	Target string
 	WorkersCount int
 	WorkersStates []workerState
+	UsernamesRandomization bool
+	PasswordsRandomization bool
 }
 
 var currentTask runningTask
 
 func main() {
-
-
-	///
-	rdpSpray()
-	os.Exit(1)
-	///
 	if restoreTask == true {
 		err := readGob("./progress.gob",&currentTask)
 		if err != nil {
 			fmt.Println(err)
 		}
 	} else {
-		rand.Seed(time.Now().UnixNano())
-		currentTask.RandomSeed = rand.Intn(100)
+		if usernameListRandomization || passwordListRandomization {
+			currentTime := time.Now().UnixNano()
+			currentTask.RandomSeed = currentTime
+			if usernameListRandomization {
+				currentTask.UsernamesRandomization = true
+			}
+			if passwordListRandomization {
+				currentTask.PasswordsRandomization = true
+			}
+		} else {
+			currentTask.RandomSeed = 0
+			currentTask.PasswordsRandomization = false
+			currentTask.UsernamesRandomization = false
+		}
+
+
 		currentTask.UsersList = pathToUsernameList
 		currentTask.PasswordsList = pathToPasswordList
 		currentTask.ProtocolToSpray = protocol
@@ -83,12 +92,19 @@ func main() {
 
 		saveProgress()
 	}
-	fmt.Println(currentTask)
 
-	////////////////////////////
 
 	usernames := loadList(currentTask.UsersList)
 	passwords := loadList(currentTask.PasswordsList)
+
+	if currentTask.UsernamesRandomization{
+		rand.Seed(currentTask.RandomSeed)
+		rand.Shuffle(len(usernames), func(i, j int) { usernames[i], usernames[j] = usernames[j], usernames[i] })
+	}
+	if currentTask.PasswordsRandomization{
+		rand.Seed(currentTask.RandomSeed)
+		rand.Shuffle(len(passwords), func(i, j int) { passwords[i], passwords[j] = passwords[j], passwords[i] })
+	}
 
     targetToSpray := parseTarget(currentTask.Target)
 	wholeTask := task{target: targetToSpray, usernames: usernames, passwords: passwords, numberOfWorkers: currentTask.WorkersCount}
@@ -117,10 +133,16 @@ func main() {
 			iter++
 		}
 	} else if currentTask.ProtocolToSpray == "httpdigest" {
-
 		for _,task := range tasks{
 			wg.Add(1)
 			go digestSpray(&wg,channelForWorker,task,&currentTask.WorkersStates[iter].WorkerProgress)
+			iter++
+		}
+	} else if currentTask.ProtocolToSpray == "rdp" {
+
+		for _,task := range tasks{
+			wg.Add(1)
+			go rdpSpray(&wg,channelForWorker,task,&currentTask.WorkersStates[iter].WorkerProgress)
 			iter++
 		}
 	}
@@ -128,3 +150,5 @@ func main() {
 	wg.Wait()
 	close(channelForWorker)
 }
+
+

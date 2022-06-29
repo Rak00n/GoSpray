@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"io"
 
-	"../../../glog"
+	"github.com/GoSpray/grdp/glog"
 
-	"../../../core"
+	"github.com/GoSpray/grdp/core"
 )
 
 func ReadEnumerates(r io.Reader) (uint8, error) {

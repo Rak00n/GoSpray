@@ -15,6 +15,9 @@ import (
 
 func digestSpray(wg *sync.WaitGroup, channelToCommunicate chan string,  taskToRun task, storeResult *int) {
 	defer wg.Done()
+	if taskToRun.target.port == 0 {
+		taskToRun.target.port = 80
+	}
 	internalCounter := 0
 	for _,password := range taskToRun.passwords {
 		for _,username := range taskToRun.usernames {
@@ -54,7 +57,6 @@ func digestSpray(wg *sync.WaitGroup, channelToCommunicate chan string,  taskToRu
 							realm = authHeaderItemValue
 						}
 					}
-
 					if algorithm == "MD5-sess" {
 						hash := md5.Sum([]byte(username + ":" + realm + ":" + password))
 						hash1 := hex.EncodeToString(hash[:])

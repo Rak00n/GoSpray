@@ -3,7 +3,7 @@ package lic
 import (
 	"io"
 
-	"../../core"
+	"github.com/GoSpray/grdp/core"
 )
 
 const (

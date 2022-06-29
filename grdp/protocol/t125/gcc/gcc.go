@@ -6,10 +6,10 @@ import (
 	"io"
 	"os"
 
-	"../../../glog"
+	"github.com/GoSpray/grdp/glog"
 
-	"../../../core"
-	"../../../protocol/t125/per"
+	"github.com/GoSpray/grdp/core"
+	"github.com/GoSpray/grdp/protocol/t125/per"
 	"github.com/lunixbochs/struc"
 )
 

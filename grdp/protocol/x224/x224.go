@@ -6,11 +6,11 @@ import (
 	"errors"
 	"fmt"
 
-	"../../glog"
+	"github.com/GoSpray/grdp/glog"
 
-	"../../core"
-	"../../emission"
-	"../../protocol/tpkt"
+	"github.com/GoSpray/grdp/core"
+	"github.com/GoSpray/grdp/emission"
+	"github.com/GoSpray/grdp/protocol/tpkt"
 	"github.com/lunixbochs/struc"
 )
 

@@ -5,10 +5,10 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	"../../core"
-	"../../emission"
-	"../../glog"
-	"../../protocol/nla"
+	"github.com/GoSpray/grdp/core"
+	"github.com/GoSpray/grdp/emission"
+	"github.com/GoSpray/grdp/glog"
+	"github.com/GoSpray/grdp/protocol/nla"
 )
 
 // take idea from https://github.com/Madnikulin50/gordp

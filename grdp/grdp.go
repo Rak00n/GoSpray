@@ -1,18 +1,17 @@
 package grdp
 
 import (
-	"./core"
-	"./glog"
-	"./protocol/nla"
-	"./protocol/pdu"
-	"./protocol/rfb"
-	"./protocol/sec"
-	"./protocol/t125"
-	"./protocol/tpkt"
-	"./protocol/x224"
 	"errors"
-	"flag"
 	"fmt"
+	"github.com/GoSpray/grdp/core"
+	"github.com/GoSpray/grdp/glog"
+	"github.com/GoSpray/grdp/protocol/nla"
+	"github.com/GoSpray/grdp/protocol/pdu"
+	"github.com/GoSpray/grdp/protocol/rfb"
+	"github.com/GoSpray/grdp/protocol/sec"
+	"github.com/GoSpray/grdp/protocol/t125"
+	"github.com/GoSpray/grdp/protocol/tpkt"
+	"github.com/GoSpray/grdp/protocol/x224"
 	"log"
 	"net"
 	"os"
@@ -240,31 +239,3 @@ func VerifyProtocol(target string) string {
 	return PROTOCOL_RDP
 }
 
-var target string
-var domain string
-var username string
-var password string
-
-func init() {
-	flag.StringVar(&target, "target", "", "Target host and port")
-	flag.StringVar(&domain, "domain", "", "User Domain")
-	flag.StringVar(&username, "username", "", "Username to try")
-	flag.StringVar(&password, "password", "", "Password to try")
-	flag.Parse()
-}
-
-func main() {
-	client := NewClient(target, glog.NONE)
-	var err error
-	//if useNLA {
-	//	err = client.LoginForSSL(domain,username, password)
-	//} else {
-	//	err = client.LoginForRDP(domain,username, password)
-	//}
-	err = client.LoginForSSL(domain,username, password)
-	if err != nil {
-		fmt.Println("login failed,", err)
-	} else {
-		fmt.Println("login success")
-	}
-}

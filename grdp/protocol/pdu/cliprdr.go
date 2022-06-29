@@ -3,8 +3,8 @@ package pdu
 import (
 	"bytes"
 
-	"../../core"
-	"../../glog"
+	"github.com/GoSpray/grdp/core"
+	"github.com/GoSpray/grdp/glog"
 )
 
 /**
