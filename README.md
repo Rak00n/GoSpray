@@ -39,6 +39,8 @@ Success: user:123
 
 
 
+*Examples:*
+
 spray.exe -ul testUsernames.txt -pl testPasswords.txt -p ssh -t 192.168.56.102 -w 10
 
 spray.exe -ul testUsernames.txt -pl testPasswords.txt -p ftp -t 192.168.56.102:21 -w 10
