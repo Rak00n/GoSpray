@@ -38,10 +38,16 @@ Success: user:123
 -restore use "progress.gob" to restore task
 
 
-//	.\s2.exe -ul testUsernames.txt -pl testPasswords.txt -p ssh -t 192.168.56.102 -w 10
-//	.\s2.exe -ul testUsernames.txt -pl testPasswords.txt -p ftp -t 192.168.56.102:21 -w 10
-//	.\s2.exe -ul testUsernames.txt -pl testPasswords.txt -p rdp -t 192.168.56.105 -w 10
-//	.\s2.exe -ul testUsernames.txt -pl testPasswords.txt -p httpbasic -t http://192.168.56.102:80/2 -w 10 -ru -rp
-//	.\s2.exe -ul testUsernames.txt -pl testPasswords.txt -p httpdigest -t http://192.168.56.102/1 -w 10
 
-//	.\s2.exe -restore
+spray.exe -ul testUsernames.txt -pl testPasswords.txt -p ssh -t 192.168.56.102 -w 10
+
+spray.exe -ul testUsernames.txt -pl testPasswords.txt -p ftp -t 192.168.56.102:21 -w 10
+
+spray.exe -ul testUsernames.txt -pl testPasswords.txt -p rdp -t 192.168.56.105 -w 10
+
+spray.exe -ul testUsernames.txt -pl testPasswords.txt -p httpbasic -t http://192.168.56.102:80/2 -w 10 -ru -rp
+
+spray.exe -ul testUsernames.txt -pl testPasswords.txt -p httpdigest -t http://192.168.56.102/1 -w 10
+
+
+spray.exe -restore
