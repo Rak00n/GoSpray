@@ -27,7 +27,7 @@ func init() {
 	flag.StringVar(&pathToPasswordList, "pl", "passwords.txt", "Path to passwords list")
 	flag.BoolVar(&usernameListRandomization, "ru", false, "Randomize users list")
 	flag.BoolVar(&passwordListRandomization, "rp", false, "Randomize passwords list")
-	flag.StringVar(&protocol, "p", "ftp", "Protocol")
+	flag.StringVar(&protocol, "p", "ftp", "Protocol (ftp,ssh,httpbasic,httpdigest,rdp,winldap)")
 	flag.StringVar(&target, "t", "10.0.0.1:21", "Target")
 	flag.IntVar(&workersNumber, "w", 5, "Number of Workers")
 	flag.Parse()
@@ -36,8 +36,11 @@ func init() {
 }
 
 func printSuccessfulLogin(c chan string) {
-	credentials := <- c
-	fmt.Println("\nSuccess: "+credentials)
+	for {
+		credentials := <- c
+		fmt.Println("\nSuccess: "+credentials)
+	}
+
 }
 
 type runningTask struct {
@@ -143,6 +146,13 @@ func main() {
 		for _,task := range tasks{
 			wg.Add(1)
 			go rdpSpray(&wg,channelForWorker,task,&currentTask.WorkersStates[iter].WorkerProgress)
+			iter++
+		}
+	} else if currentTask.ProtocolToSpray == "winldap" {
+
+		for _,task := range tasks{
+			wg.Add(1)
+			go ldapSpray(&wg,channelForWorker,task,&currentTask.WorkersStates[iter].WorkerProgress)
 			iter++
 		}
 	}

@@ -2,7 +2,7 @@
  Simple tool to bruteforce (spray actually) different network protocols.
  GoSpray also supports restoration of interrupted tasks ("-restore").
  
- GoSpray currently supports: **rdp, ssh, ftp, http basic** and **digest authentication**
+ GoSpray currently supports: **rdp, ssh, ftp, Windows LDAP, http basic** and **digest authentication**
 
 
 ```
@@ -29,7 +29,7 @@ Success: user:123
 
 -ul   Path to file with **passwords**
 
--p   Protocol to brute ( rdp, ssh, ftp, httpbasic, httpdigest )
+-p   Protocol to brute ( winldap, rdp, ssh, ftp, httpbasic, httpdigest )
 
 -t   Target host. http://127.0.0.1:667/protected/folder/
 
@@ -52,6 +52,7 @@ spray.exe -ul testUsernames.txt -pl testPasswords.txt -p httpbasic -t http://192
 
 spray.exe -ul testUsernames.txt -pl testPasswords.txt -p httpdigest -t http://192.168.56.102/1 -w 10
 
+spray.exe -ul testUsernames.txt -pl testPasswords.txt -p winldap -t 192.168.56.106 -w 10
 
 spray.exe -restore
 ```
