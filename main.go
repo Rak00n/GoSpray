@@ -155,6 +155,13 @@ func main() {
 			go ldapSpray(&wg,channelForWorker,task,&currentTask.WorkersStates[iter].WorkerProgress)
 			iter++
 		}
+	} else if currentTask.ProtocolToSpray == "kerberos" {
+
+		for _,task := range tasks{
+			wg.Add(1)
+			go kerberosSpray(&wg,channelForWorker,task,&currentTask.WorkersStates[iter].WorkerProgress)
+			iter++
+		}
 	}
 	go monitorCurrentTask()
 	wg.Wait()
