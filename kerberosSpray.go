@@ -1,8 +1,8 @@
 package main
 
-import 	"github.com/jcmturner/gokrb5/client"
+// Doesnt' work. Some hrrible preblems with packages
 
 func kerberosSpray() {
-	cl := client.NewClientWithPassword("username", "REALM.COM", "password")
-
+	//cl := client.Client{}
+	//fmt.Println(cl)
 }
