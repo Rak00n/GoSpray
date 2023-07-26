@@ -41,11 +41,11 @@ Success: user:123
 **Target formats:**
 
 ```
-192.168.56.102 - for **ssh, rdp, ldap, ftp**
+192.168.56.102 - for ssh, rdp, ldap, ftp
 
-192.168.56.102:21 - for **ssh, rdp, ldap, ftp**
+192.168.56.102:21 - for ssh, rdp, ldap, ftp
 
-http://192.168.56.102:80/2 - for **basic** and **digest authentication**
+http://192.168.56.102:80/2 - for basic and digest authentication
 
 ``` 
  

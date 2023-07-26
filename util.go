@@ -45,6 +45,7 @@ type taskState struct {
 }
 
 type task struct {
+	targetsRaw []string
 	target targetStruct
 	usernames []string
 	passwords []string
@@ -151,13 +152,13 @@ func dispatchTask(taskToDispatch task) []task{
 		usernamesBuffer = append(usernamesBuffer,username)
 		iterator++
 		if iterator == usernamesPerWorker {
-			tasksToReturn = append(tasksToReturn,task{target: taskToDispatch.target, usernames: usernamesBuffer, passwords: taskToDispatch.passwords, numberOfWorkers: 1})
+			tasksToReturn = append(tasksToReturn,task{targetsRaw: taskToDispatch.targetsRaw, usernames: usernamesBuffer, passwords: taskToDispatch.passwords, numberOfWorkers: 1})
 			usernamesBuffer = nil
 			iterator = 0
 		}
 	}
 	if len(usernamesBuffer) != 0 {
-		tasksToReturn = append(tasksToReturn,task{target: taskToDispatch.target, usernames: usernamesBuffer, passwords: taskToDispatch.passwords, numberOfWorkers: 1})
+		tasksToReturn = append(tasksToReturn,task{targetsRaw: taskToDispatch.targetsRaw, usernames: usernamesBuffer, passwords: taskToDispatch.passwords, numberOfWorkers: 1})
 	}
 	return tasksToReturn
 }

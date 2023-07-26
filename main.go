@@ -17,7 +17,7 @@ var usernameListRandomization bool
 var pathToPasswordList string
 var passwordListRandomization bool
 var protocol string
-var target string
+var pathToTargetList string
 var workersNumber int
 var taskStateObj taskState 
 
@@ -28,7 +28,7 @@ func init() {
 	flag.BoolVar(&usernameListRandomization, "ru", false, "Randomize users list")
 	flag.BoolVar(&passwordListRandomization, "rp", false, "Randomize passwords list")
 	flag.StringVar(&protocol, "p", "ftp", "Protocol (ftp,ssh,httpbasic,httpdigest,rdp,winldap)")
-	flag.StringVar(&target, "t", "10.0.0.1:21", "Target")
+	flag.StringVar(&pathToTargetList, "tl", "targets.txt", "Path to targets list")
 	flag.IntVar(&workersNumber, "w", 5, "Number of Workers")
 	flag.Parse()
 	
@@ -40,7 +40,6 @@ func printSuccessfulLogin(c chan string) {
 		credentials := <- c
 		fmt.Println("\nSuccess: "+credentials)
 	}
-
 }
 
 type runningTask struct {
@@ -48,7 +47,7 @@ type runningTask struct {
 	UsersList string
 	PasswordsList string
 	ProtocolToSpray string
-	Target string
+	Targets []string
 	WorkersCount int
 	WorkersStates []workerState
 	UsernamesRandomization bool
@@ -83,7 +82,7 @@ func main() {
 		currentTask.UsersList = pathToUsernameList
 		currentTask.PasswordsList = pathToPasswordList
 		currentTask.ProtocolToSpray = protocol
-		currentTask.Target = target
+		currentTask.Targets = loadList(pathToTargetList)
 		currentTask.WorkersCount = workersNumber
 
 		for i := 1; i <= workersNumber; i++ {
@@ -109,8 +108,8 @@ func main() {
 		rand.Shuffle(len(passwords), func(i, j int) { passwords[i], passwords[j] = passwords[j], passwords[i] })
 	}
 
-    targetToSpray := parseTarget(currentTask.Target)
-	wholeTask := task{target: targetToSpray, usernames: usernames, passwords: passwords, numberOfWorkers: currentTask.WorkersCount}
+    //targetToSpray := parseTarget(currentTask.Target)
+	wholeTask := task{targetsRaw: currentTask.Targets, usernames: usernames, passwords: passwords, numberOfWorkers: currentTask.WorkersCount}
 	tasks := dispatchTask(wholeTask)
 
 	var wg sync.WaitGroup
