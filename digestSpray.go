@@ -29,6 +29,7 @@ func digestSpray(wg *sync.WaitGroup, channelToCommunicate chan string,  taskToRu
 					http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 					client := &http.Client{}
 					req, _ := http.NewRequest("GET", taskToRun.target.scheme+"://"+taskToRun.target.host+":"+strconv.Itoa(taskToRun.target.port)+"/"+taskToRun.target.url, nil)
+					req.Close = true
 					res, requestError := client.Do(req)
 					if requestError != nil {
 						fmt.Println("HTTP Request failed. Target may be inaccessible or wrong taget format.",requestError)
@@ -93,18 +94,22 @@ func digestSpray(wg *sync.WaitGroup, channelToCommunicate chan string,  taskToRu
 							headerValue := "Digest username=\"" + username + "\", realm=\"" + realm + "\", nonce=\"" + nonce + "\", uri=\"" + "/" + taskToRun.target.url + "\", algorithm=" + algorithm + ", response=\"" + response + "\", qop=" + qop + ", nc=00000001, cnonce=\"" + cnonce + "\""
 
 							client = &http.Client{}
-							req, _ = http.NewRequest("GET", taskToRun.target.scheme+"://"+taskToRun.target.host+":"+strconv.Itoa(taskToRun.target.port)+"/"+taskToRun.target.url, nil)
-							req.Header.Set("Authorization", headerValue)
-							res, _ = client.Do(req)
+							reqInner, _ := http.NewRequest("GET", taskToRun.target.scheme+"://"+taskToRun.target.host+":"+strconv.Itoa(taskToRun.target.port)+"/"+taskToRun.target.url, nil)
+							reqInner.Close = true
+							reqInner.Header.Set("Authorization", headerValue)
+							resInner, _ := client.Do(reqInner)
 
-							if res.StatusCode == 401 {
+							if resInner.StatusCode == 401 {
 								fmt.Print("-")
 							} else {
 								fmt.Print("+")
 								channelToCommunicate <- taskToRun.target.host + ":" + username + ":" + password
 							}
+							resInner.Body.Close()
 						}
+						res.Body.Close()
 					}
+
 					*storeResult++
 				} else {
 				}
