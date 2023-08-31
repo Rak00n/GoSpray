@@ -27,7 +27,7 @@ func init() {
 	flag.StringVar(&pathToPasswordList, "pl", "passwords.txt", "Path to passwords list")
 	flag.BoolVar(&usernameListRandomization, "ru", false, "Randomize users list")
 	flag.BoolVar(&passwordListRandomization, "rp", false, "Randomize passwords list")
-	flag.StringVar(&protocol, "p", "ftp", "Protocol (ftp,ssh,httpbasic,httpdigest,rdp,winldap)")
+	flag.StringVar(&protocol, "p", "ftp", "Protocol (ftp,ssh,httpbasic,httpdigest,rdp,winldap,kerberos)")
 	flag.StringVar(&pathToTargetList, "tl", "targets.txt", "Path to targets list")
 	flag.IntVar(&workersNumber, "w", 5, "Number of Workers")
 	flag.Parse()
@@ -154,11 +154,11 @@ func main() {
 			go ldapSpray(&wg,channelForWorker,task,&currentTask.WorkersStates[iter].WorkerProgress)
 			iter++
 		}
-	} else if currentTask.ProtocolToSpray == "kerberos" { // Doesn't work :(
+	} else if currentTask.ProtocolToSpray == "kerberos" {
 
-		for _,_ = range tasks{
+		for _,task := range tasks{
 			wg.Add(1)
-			//go kerberosSpray(&wg,channelForWorker,task,&currentTask.WorkersStates[iter].WorkerProgress)
+			go kerberosSpray(&wg,channelForWorker,task,&currentTask.WorkersStates[iter].WorkerProgress)
 			iter++
 		}
 	}
