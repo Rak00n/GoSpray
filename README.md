@@ -2,7 +2,7 @@
  Simple tool to bruteforce (spray actually) different network protocols.
  GoSpray also supports restoration of interrupted tasks ("-restore").
  
- GoSpray currently supports: **rdp, ssh, ftp, Windows LDAP, http basic** and **digest authentication**
+ GoSpray currently supports: **rdp, ssh, ftp, Windows LDAP, Windows Kerberos, http basic** and **digest authentication**
 
 
 ```
@@ -46,6 +46,8 @@ Success: user:123
 192.168.56.102:21 - for **ssh, rdp, ldap, ftp**
 
 http://192.168.56.102:80/2 - for **basic** and **digest authentication**
+
+test.local:88 - for **Windows Kerberos**
 
 ``` 
  
