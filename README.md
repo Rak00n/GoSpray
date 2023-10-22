@@ -35,6 +35,8 @@ Success: user:123
 
 -w   Number of workers (threads)
 
+-debug Run with debug information (for now only httpbasic) 
+
 -restore use "progress.gob" to restore task
  
  

@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"encoding/base64"
 	"fmt"
+	"io"
 	"net/http"
 	"strconv"
 	"sync"
@@ -11,7 +12,7 @@ import (
 
 
 
-func basicSpray(wg *sync.WaitGroup, channelToCommunicate chan string,  taskToRun task, storeResult *int) {
+func basicSpray(wg *sync.WaitGroup, channelToCommunicate chan string,  taskToRun task, storeResult *int, debugRun bool) {
 	defer wg.Done()
 	internalCounter := 0
 	for _,taskTarget := range taskToRun.targetsRaw {
@@ -33,6 +34,19 @@ func basicSpray(wg *sync.WaitGroup, channelToCommunicate chan string,  taskToRun
 					if res.StatusCode == 401 {
 						fmt.Print("-")
 					} else {
+						if(debugRun == true) {
+							bodyBytes, err := io.ReadAll(res.Body)
+							if err != nil {
+								fmt.Print("Error: no response body")
+							}
+							bodyString := string(bodyBytes)
+							fmt.Println("DEBUG:",res.StatusCode,bodyString)
+							for name, values := range res.Header {
+								for _, value := range values {
+									fmt.Println(name, value)
+								}
+							}
+						}
 						fmt.Print("+")
 						channelToCommunicate <- taskToRun.target.host + ":" + username+":"+password
 					}

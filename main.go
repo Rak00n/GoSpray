@@ -20,6 +20,7 @@ var protocol string
 var pathToTargetList string
 var workersNumber int
 var taskStateObj taskState 
+var debugRun bool
 
 func init() {
 	flag.BoolVar(&restoreTask, "restore", false, "Restore task")
@@ -30,6 +31,7 @@ func init() {
 	flag.StringVar(&protocol, "p", "ftp", "Protocol (ftp,ssh,httpbasic,httpdigest,rdp,winldap,kerberos)")
 	flag.StringVar(&pathToTargetList, "tl", "targets.txt", "Path to targets list")
 	flag.IntVar(&workersNumber, "w", 5, "Number of Workers")
+	flag.BoolVar(&debugRun, "debug", false, "Show debug info")
 	flag.Parse()
 	
 	
@@ -131,7 +133,7 @@ func main() {
 	} else if currentTask.ProtocolToSpray == "httpbasic" {
 		for _,task := range tasks{
 			wg.Add(1)
-			go basicSpray(&wg,channelForWorker,task,&currentTask.WorkersStates[iter].WorkerProgress)
+			go basicSpray(&wg,channelForWorker,task,&currentTask.WorkersStates[iter].WorkerProgress,debugRun)
 			iter++
 		}
 	} else if currentTask.ProtocolToSpray == "httpdigest" {
