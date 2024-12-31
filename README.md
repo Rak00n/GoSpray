@@ -4,6 +4,7 @@
  
  GoSpray currently supports: **rdp, ssh, ftp, Windows LDAP, Windows Kerberos, http basic** and **digest authentication**
 
+**Any requests for support of new protocols are welcomed!**
 
 ```
 go run . -ul testUsernames.txt -pl testPasswords.txt -p ftp -tl targets.txt -w 10
